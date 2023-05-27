@@ -15,28 +15,25 @@ import kotlinx.coroutines.launch
 
 class LineViewModel(application: Application) : AndroidViewModel(application) {
 
-    // Using LiveData and caching what allWords returns has several benefits:
-    // - We can put an observer on the data (instead of polling for changes) and only update the
-    //   the UI when the data actually changes.
-    // - Repository is completely separated from the UI through the ViewModel.
-//    val allLines: LiveData<List<DBLine>> = repository.allWords.asLiveData()
+    private lateinit var getAllLines: List<DBLine>
 
-    /**
-     * Launching a new coroutine to insert the data in a non-blocking way
-     */
-    private val getAllLines: List<DBLine>
-//    private val getAllLines: LiveData<List<DBLine>>
-    private val repository: LineRepository
+    //    private val getAllLines: LiveData<List<DBLine>>
+    private val lineRepository: LineRepository
+
     init {
         val myDao = MyDatabase.getDatabase(application).myDao()
-        repository = LineRepository(myDao)
-        getAllLines = repository.getAllLines
+        lineRepository = LineRepository(myDao)
+        getAllLines = lineRepository.getAllLines
     }
 
-    fun insert(line: DBLine) {
-        viewModelScope.launch(Dispatchers.IO){
-            repository.insert(line)
+    suspend fun insert(line: DBLine) {
+        viewModelScope.launch(Dispatchers.IO) {
+            lineRepository.insert(line)
         }
+    }
+
+    suspend fun deleteAll(){
+        lineRepository.deleteAll()
     }
 }
 

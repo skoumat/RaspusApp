@@ -25,10 +25,11 @@ abstract class MyDatabase : RoomDatabase() {
                 val instance = Room.databaseBuilder(
                     context.applicationContext,
                     MyDatabase::class.java,
-                    "my_database")
-                //.fallbackToDestructiveMigration()
-//                        .addCallback(MyDatabaseCallback)
-                        .allowMainThreadQueries()
+                    "my_database"
+                )
+                    .fallbackToDestructiveMigration()
+                    .addCallback(MyDatabaseCallback)
+                    .allowMainThreadQueries()
                     .build()
                 INSTANCE = instance
                 return instance
@@ -40,7 +41,11 @@ abstract class MyDatabase : RoomDatabase() {
             override fun onCreate(db: SupportSQLiteDatabase) {
                 super.onCreate(db)
 
-                db.insert("lines", 0, fillInfo(0, "Wong_kojoti", "Kojoti", "pan Wong"))
+
+// nic nedela
+//                db.delete("lines", null, null)
+// nic nedela
+                db.insert("lines", 0, fillInfo(0, "Extras_tak_jdeme_na_to", "Tak jdeme na to drahá", "Extras"))
 
 //                val wong = "pan Wong"
 //                val spusa = "Raspuša"
