@@ -1,9 +1,12 @@
 package com.example.raspusapp
 
+import com.example.raspusapp.data.MyDatabase
 import android.media.MediaPlayer
 import android.os.Bundle
 import android.widget.GridView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProvider
+import com.example.raspusapp.data.DBLine
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.SupervisorJob
 
@@ -15,15 +18,29 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        val database = MyDatabase.getDatabase(this, CoroutineScope(SupervisorJob()))
+
+        val database = MyDatabase.getDatabase(this)
+
+//        database.myDao().deleteAll()
+
+
+        lateinit var mLineViewModel: LineViewModel
+        mLineViewModel = ViewModelProvider(this).get(LineViewModel::class.java)
+        var line = DBLine(0, "Wong_kojoti", "Kojoti", "pan Wong")
+        mLineViewModel.insert(line)
+
+
         val allLines = database.myDao().getAllLines()
+
+
+
 
         lineGRV = findViewById(R.id.idGRV)
         lineList = ArrayList<GridViewModal>()
 
-//        allLines.forEach{
-//            lineList = lineList + GridViewModal(it.line, it.file)
-//        }
+        allLines.forEach{
+            lineList = lineList + GridViewModal(it.line, it.file)
+        }
 
         val lineAdapter = GridRVAdapter(lineList = lineList, this@MainActivity)
 

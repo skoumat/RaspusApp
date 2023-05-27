@@ -1,20 +1,24 @@
-package com.example.raspusapp
+package com.example.raspusapp.data
 
+import androidx.lifecycle.LiveData
 import androidx.room.*
 import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface MyDao {
     // je tam treba to order by?  ORDER BY id ASC
-    @Query("SELECT * FROM lines")
-    fun getAllLines () : Flow<List<DBLine>>
+//    @Query("SELECT * FROM lines")
+//    fun getAllLines () : Flow<List<DBLine>>
+    @Query("SELECT * FROM lines ORDER BY id ASC")
+    fun getAllLines () : List<DBLine>
+//    fun getAllLines () : LiveData<List<DBLine>>
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insert(line: DBLine)
 
 
     @Query("DELETE FROM lines")
-    suspend fun deleteAll()
+    fun deleteAll()
 
 //    @Query("SELECT * FROM lines ORDER BY line ASC")
 //    fun getAllLinesOrderedByLine () : List<DBLine>
