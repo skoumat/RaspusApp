@@ -1,63 +1,66 @@
 package com.example.raspusapp
 
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.BaseAdapter
-import android.widget.TextView
+import android.widget.*
+import java.util.*
 
-// on below line we are creating an
-// adapter class for our grid view.
 internal class GridRVAdapter(
-    // on below line we are creating two
-    // variables for course list and context
     private val lineList: List<GridViewModal>,
     private val context: Context
-) :
-    BaseAdapter() {
-    // in base adapter class we are creating variables
-    // for layout inflater, course image view and course text view.
-    private var layoutInflater: LayoutInflater? = null
-    private lateinit var lineTV: TextView
+) : BaseAdapter(), Filterable {
 
-    // below method is use to return the count of course list
+    private var filteredData: List<GridViewModal> = lineList
+
     override fun getCount(): Int {
-        return lineList.size
+        return filteredData.size
     }
 
-    // below function is use to return the item of grid view.
     override fun getItem(position: Int): Any? {
-        return null
+        return filteredData[position]
     }
 
-    // below function is use to return item id of grid view.
     override fun getItemId(position: Int): Long {
-        return 0
+        return position.toLong()
     }
 
-    // in below function we are getting individual item of grid view.
-    override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
-        var convertView = convertView
-        // on blow line we are checking if layout inflater
-        // is null, if it is null we are initializing it.
-        if (layoutInflater == null) {
-            layoutInflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+
+    override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
+        // Inflate and populate your grid view item layout
+        val view = convertView ?: LayoutInflater.from(parent.context)
+            .inflate(R.layout.gridview_item, parent, false)
+
+        var itemText = view.findViewById<TextView>(R.id.idTVLine)
+        itemText.text = filteredData[position].line
+
+        return view
+    }
+
+    override fun getFilter(): Filter {
+        return object : Filter() {
+            override fun performFiltering(constraint: CharSequence?): FilterResults {
+                val query = constraint?.toString()?.lowercase(Locale.getDefault())
+
+                val results = FilterResults()
+                val filteredList = if (query.isNullOrBlank()) {
+                    lineList
+                } else {
+                    lineList.filter { it.line.lowercase(Locale.getDefault()).contains(query) }
+                }
+
+                results.values = filteredList
+                results.count = filteredList.size
+
+                return results
+            }
+
+            override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
+                filteredData = results?.values as? List<GridViewModal> ?: emptyList()
+                notifyDataSetChanged()
+            }
         }
-        // on the below line we are checking if convert view is null.
-        // If it is null we are initializing it.
-        if (convertView == null) {
-            // on below line we are passing the layout file
-            // which we have to inflate for each item of grid view.
-            convertView = layoutInflater!!.inflate(R.layout.gridview_item, null)
-        }
-        // on below line we are initializing our course image view
-        // and course text view with their ids.
-        lineTV = convertView!!.findViewById(R.id.idTVLine)
-        // on below line we are setting image for our course image view.
-        // on below line we are setting text in our course text view.
-        lineTV.setText(lineList.get(position).line)
-        // at last we are returning our convert view.
-        return convertView
     }
 }

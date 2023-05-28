@@ -1,9 +1,5 @@
 package com.example.raspusapp.data
 
-import androidx.annotation.WorkerThread
-import kotlinx.coroutines.flow.Flow
-import androidx.lifecycle.LiveData
-
 class LineRepository(private val myDao: MyDao)  {
     val getAllLines: List<DBLine> = myDao.getAllLines()
 

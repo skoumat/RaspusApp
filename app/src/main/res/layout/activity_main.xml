@@ -15,7 +15,7 @@
 
     <!--on below line we are creating a grid view-->
     <GridView
-        android:id="@+id/idGRV"
+        android:id="@+id/GRV"
         android:layout_width="405dp"
         android:layout_height="658dp"
         android:layout_below="@+id/toolbar"
@@ -26,5 +26,17 @@
         android:horizontalSpacing="6dp"
         android:numColumns="2"
         android:verticalSpacing="6dp" />
+
+    <android.widget.SearchView
+        android:id = "@+id/searchView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginBottom="16dp"
+        android:layout_marginTop="4dp"
+        android:background="@drawable/searchview_background"
+        android:iconifiedByDefault="false"
+        android:queryBackground="@android:color/transparent"
+        />
 
 </RelativeLayout>

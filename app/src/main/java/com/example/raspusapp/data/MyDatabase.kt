@@ -7,7 +7,7 @@ import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
 import android.content.ContentValues
 
-@Database(entities = [DBLine::class], version = 1, exportSchema = false)
+@Database(entities = [DBLine::class], version = 2, exportSchema = false)
 abstract class MyDatabase : RoomDatabase() {
 
     abstract fun myDao(): MyDao
@@ -95,14 +95,7 @@ abstract class MyDatabase : RoomDatabase() {
 
         }
 
-        suspend fun populateDatabase(myDao: MyDao) {
-            // Start the app with a clean database every time.
-            // Not needed if you only populate on creation.
-//            myDao.deleteAll()
 
-            var line = DBLine(0, "Wong_kojoti", "Kojoti", "pan Wong")
-            myDao.insert(line)
-        }
     }
 }
 

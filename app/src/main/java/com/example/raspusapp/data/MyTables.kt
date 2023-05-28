@@ -8,6 +8,6 @@ import androidx.room.PrimaryKey
 data class DBLine(@PrimaryKey(autoGenerate = true) val id : Long,
                   @ColumnInfo(name = "file") val file : String,
                   @ColumnInfo(name = "line") val line : String,
-                  @ColumnInfo(name = "character") val character : String
-//                  @ColumnInfo(name = "character2") val character2 : String
+                  @ColumnInfo(name = "character") val character : String,
+                  @ColumnInfo(name = "character2") val character2 : String
 )
