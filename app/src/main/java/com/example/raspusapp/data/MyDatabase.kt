@@ -28,7 +28,7 @@ abstract class MyDatabase : RoomDatabase() {
                     "my_database"
                 )
                     .fallbackToDestructiveMigration()
-                    .addCallback(MyDatabaseCallback)
+//                    .addCallback(MyDatabaseCallback)
                     .allowMainThreadQueries()
                     .build()
                 INSTANCE = instance
@@ -45,7 +45,7 @@ abstract class MyDatabase : RoomDatabase() {
 // nic nedela
 //                db.delete("lines", null, null)
 // nic nedela
-                db.insert("lines", 0, fillInfo(0, "Extras_tak_jdeme_na_to", "Tak jdeme na to drahá", "Extras"))
+//                db.insert("lines", 0, fillInfo(0, "Extras_tak_jdeme_na_to", "Tak jdeme na to drahá", "Extras"))
 
 //                val wong = "pan Wong"
 //                val spusa = "Raspuša"

@@ -1,10 +1,45 @@
-<menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.example.raspusapp.MainActivity">
-    <item
-        android:id="@+id/action_settings"
-        android:orderInCategory="100"
-        android:title="@string/action_settings"
-        app:showAsAction="never" />
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/filters"
+            android:title="@string/filter">
+            <menu>
+                <group android:checkableBehavior="single">
+                    <item
+                        android:id="@+id/all"
+                        android:title="@string/all"/>
+                    <item
+                        android:id="@+id/spusa"
+                        android:title="@string/spusa"/>
+                    <item
+                        android:id="@+id/norbit"
+                        android:title="@string/norbit"/>
+                    <item
+                        android:id="@+id/wong"
+                        android:title="@string/wong"/>
+                    <item
+                        android:id="@+id/kate"
+                        android:title="@string/kate"/>
+                    <item
+                        android:id="@+id/extras"
+                        android:title="@string/extras"/>
+                </group>
+            </menu>
+        </item>
+
+        <item
+            android:id="@+id/action_settings"
+            android:title="@string/sort_by">
+            <menu>
+                <group android:checkableBehavior="single">
+                    <item
+                        android:id="@+id/time"
+                        android:title="@string/time"/>
+                    <item
+                        android:id="@+id/title"
+                        android:title="@string/title"/>
+                </group>
+            </menu>
+        </item>
+    </group>
 </menu>

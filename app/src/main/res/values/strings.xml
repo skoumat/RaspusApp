@@ -1,9 +1,17 @@
 <resources>
     <string name="app_name">RaspušApp</string>
     <string name="action_settings">Settings</string>
-
-    <string name="hint_word">Word…</string>
-    <string name="button_save">Save</string>
-    <string name="empty_not_saved">Word not saved because it is empty.</string>
-    <string name="add_word">Add word</string>
+    <string name="spusa">Raspuša</string>
+    <string name="wong">pan Wong</string>
+    <string name="extras">Extras</string>
+    <string name="norbit">Norbit</string>
+    <string name="kate">Kate</string>
+    <string name="all">All</string>
+    <string name="filter">Filtr</string>
+    <string name="sort_by">Řazení</string>
+    <string name="tools">Nástroje</string>
+    <string name="title">Název</string>
+    <string name="time">Čas</string>
+    <string name="open">Otevřít</string>
+    <string name="close">Zavřít</string>
 </resources>

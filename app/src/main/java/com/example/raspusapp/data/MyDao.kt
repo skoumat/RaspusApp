@@ -20,9 +20,9 @@ interface MyDao {
     @Query("SELECT * FROM lines ORDER BY line ASC")
     fun getAllLinesOrderedByLine () : List<DBLine>
 
-    // bude to porad zorganizovane podle casu?  NULLS FIRST na konci nefunguje :/
-//    @Query("SELECT * FROM lines i WHERE i.character = :character OR i.character2 = :character ORDER BY character2")
-//    fun getCharacterLines(character : String) : List<DBLine>
+//     bude to porad zorganizovane podle casu?  NULLS FIRST na konci nefunguje :/
+    @Query("SELECT * FROM lines i WHERE i.character = :character OR i.character2 = :character ORDER BY character2")
+    fun getCharacterLines(character : String) : List<DBLine>
 
     @Query("SELECT * FROM lines i WHERE i.line LIKE :line COLLATE NOCASE")
     fun getLinesByName(line : String) : List<DBLine>
