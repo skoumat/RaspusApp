@@ -5,33 +5,25 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_gravity="center"
-    android:layout_margin="5dp"
-    app:cardCornerRadius="5dp"
-    app:cardElevation="5dp">
+    android:layout_margin="@dimen/small_padding"
+    app:cardCornerRadius="@dimen/corner_radius">
 
-    <!--on below line we are creating
-        a linear layout for grid view item-->
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:background="@color/black"
+        android:layout_height="@dimen/card"
+        android:background="?attr/colorTertiary"
         android:orientation="vertical">
 
-        <!--on below line we are creating
-            a simple text view-->
-        <!--android:textAlignment="center"-->
         <TextView
             android:id="@+id/idTVLine"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="center_vertical"
-            android:layout_margin="5dp"
-            android:background="#000000"
             android:gravity="center"
-            android:padding="4dp"
+            android:padding="@dimen/smallest_padding"
             android:text="@string/app_name"
-            android:textColor="@color/white"
-            android:textSize="22sp"
+            android:textColor="?attr/colorOnTertiary"
+            android:textSize="@dimen/big_text"
             android:textStyle="bold" />
 
     </LinearLayout>

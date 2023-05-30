@@ -1,9 +1,12 @@
 <resources>
+    <dimen name="smallest_padding">4dp</dimen>
     <dimen name="small_padding">6dp</dimen>
     <dimen name="big_padding">10dp</dimen>
-    <dimen name="min_height">48dp</dimen>
     <dimen name="default_width">150dp</dimen>
     <dimen name="toolbar_height">80dp</dimen>
     <dimen name="toolbar_height_and_small_padding">86dp</dimen>
-
+    <dimen name="card">100dp</dimen>
+    <dimen name="big_text">22sp</dimen>
+    <dimen name="thick_stroke">4dp</dimen>
+    <dimen name="corner_radius">5dp</dimen>
 </resources>

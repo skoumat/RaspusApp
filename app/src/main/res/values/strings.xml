@@ -1,15 +1,14 @@
 <resources>
     <string name="app_name">RaspušApp</string>
-    <string name="action_settings">Settings</string>
+    <string name="all">Vše</string>
     <string name="spusa">Raspuša</string>
     <string name="wong">pan Wong</string>
-    <string name="extras">Extras</string>
     <string name="norbit">Norbit</string>
     <string name="kate">Kate</string>
-    <string name="all">All</string>
+    <string name="extras">Ostatní</string>
+
     <string name="filter">Filtr</string>
     <string name="sort_by">Řazení</string>
-    <string name="tools">Nástroje</string>
     <string name="title">Název</string>
     <string name="time">Čas</string>
     <string name="open">Otevřít</string>

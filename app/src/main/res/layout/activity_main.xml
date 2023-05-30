@@ -5,7 +5,7 @@
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/green_background"
+    android:background="?attr/colorSecondary"
     tools:context=".MainActivity"
     android:layoutDirection="rtl"
     >
@@ -13,13 +13,13 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/nav_view">
+        android:layout_below="@+id/content">
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="80dp"
-            android:background="@color/purple_500"
+            android:layout_height="@dimen/toolbar_height"
+            android:background="?attr/colorPrimary"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -34,7 +34,7 @@
                 android:layout_marginBottom="@dimen/small_padding"
                 android:background="@drawable/searchview_background"
                 android:iconifiedByDefault="false"
-                android:queryBackground="@android:color/transparent" />
+                android:queryBackground="@color/transparent"/>
         </androidx.appcompat.widget.Toolbar>
 
         <GridView
@@ -53,18 +53,20 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/nav_view"
-        android:layout_marginTop="80dp"
+        android:layout_marginTop="@dimen/toolbar_height"
         android:layout_width="@dimen/default_width"
         android:layout_height="wrap_content"
         app:headerLayout="@layout/header"
         app:menu="@menu/menu_main"
         android:layout_gravity="start"
         android:fitsSystemWindows="true"
+        android:background="?attr/colorPrimary"
+        app:itemTextColor="@color/drawer_item"
+        android:layoutDirection="ltr"
         />
 
 </androidx.drawerlayout.widget.DrawerLayout>

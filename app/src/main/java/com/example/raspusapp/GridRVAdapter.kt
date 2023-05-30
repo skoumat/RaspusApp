@@ -1,6 +1,5 @@
 package com.example.raspusapp
 
-import android.content.Context
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -9,8 +8,7 @@ import android.widget.*
 import java.util.*
 
 internal class GridRVAdapter(
-    private val lineList: List<GridViewModal>,
-    private val context: Context
+    private val lineList: List<GridViewModal>
 ) : BaseAdapter(), Filterable {
 
     private var filteredData: List<GridViewModal> = lineList
@@ -27,9 +25,7 @@ internal class GridRVAdapter(
         return position.toLong()
     }
 
-
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
-        // Inflate and populate your grid view item layout
         val view = convertView ?: LayoutInflater.from(parent.context)
             .inflate(R.layout.gridview_item, parent, false)
 

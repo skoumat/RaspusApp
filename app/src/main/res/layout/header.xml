@@ -1,66 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="@dimen/toolbar_height"
-    android:background="@color/green_background">
+    android:background="@color/main_green">
 
-<!--<androidx.appcompat.widget.Toolbar-->
-<!--    android:id="@+id/toolbar"-->
-<!--    android:layout_width="match_parent"-->
-<!--    android:layout_height="match_parent"-->
-<!--    android:background="?attr/colorPrimary">-->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="@string/app_name"
+        android:gravity="center"
+        android:textSize="@dimen/big_text"
+        android:textStyle="bold"
+        android:textColor="@color/white" />
 
-<!--    <android.widget.SearchView-->
-<!--        android:id="@+id/searchView"-->
-<!--        android:layout_width="@dimen/default_width"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_gravity="start"-->
-<!--        android:layout_marginStart="@dimen/big_padding"-->
-<!--        android:layout_marginTop="@dimen/small_padding"-->
-<!--        android:layout_marginBottom="@dimen/small_padding"-->
-<!--        android:background="@drawable/searchview_background"-->
-<!--        android:iconifiedByDefault="false"-->
-<!--        android:queryBackground="@android:color/transparent" />-->
-
-
-<!--    <com.google.android.material.textfield.TextInputLayout-->
-<!--        android:id="@+id/filters"-->
-<!--        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"-->
-<!--        android:layout_width="@dimen/default_width"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_gravity="center"-->
-<!--        android:layout_marginTop="@dimen/small_padding"-->
-<!--        android:layout_marginBottom="@dimen/small_padding"-->
-<!--        android:hint="@string/filter">-->
-
-<!--        <AutoCompleteTextView-->
-<!--            android:id="@+id/filters_act"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:inputType="none" />-->
-<!--    </com.google.android.material.textfield.TextInputLayout>-->
-
-<!--    <com.google.android.material.textfield.TextInputLayout-->
-<!--        android:id="@+id/sort_by"-->
-<!--        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"-->
-<!--        android:layout_width="@dimen/default_width"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_gravity="end"-->
-<!--        android:layout_marginTop="@dimen/small_padding"-->
-<!--        android:layout_marginEnd="@dimen/big_padding"-->
-<!--        android:layout_marginBottom="@dimen/small_padding"-->
-<!--        android:hint="@string/sort_by">-->
-
-<!--        <AutoCompleteTextView-->
-<!--            android:id="@+id/sort_by_act"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:inputType="none" />-->
-
-
-<!--    </com.google.android.material.textfield.TextInputLayout>-->
-
-<!--</androidx.appcompat.widget.Toolbar>-->
 </LinearLayout>

@@ -28,7 +28,7 @@
         </item>
 
         <item
-            android:id="@+id/action_settings"
+            android:id="@+id/sorting"
             android:title="@string/sort_by">
             <menu>
                 <group android:checkableBehavior="single">

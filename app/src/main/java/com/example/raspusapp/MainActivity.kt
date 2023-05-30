@@ -43,6 +43,10 @@ class MainActivity : AppCompatActivity() {
         toolbar = findViewById(R.id.toolbar)
         toolbar.setNavigationIcon(R.drawable.baseline_filter_alt_24)
         setSupportActionBar(toolbar)
+        supportActionBar?.setHomeButtonEnabled(true);
+        supportActionBar?.setDisplayHomeAsUpEnabled(true);
+        supportActionBar?.setHomeAsUpIndicator(R.drawable.baseline_filter_alt_24);
+        supportActionBar?.setTitle("")
 
         dwLayout = binding.drawerLayout
 
@@ -295,42 +299,42 @@ class MainActivity : AppCompatActivity() {
             lineList = lineList + GridViewModal(it.line, it.file)
         }
 
-        lineAdapter = GridRVAdapter(lineList = lineList, this@MainActivity)
+        lineAdapter = GridRVAdapter(lineList = lineList)
 
         lineGRV.adapter = lineAdapter
         lineGRV.setOnItemClickListener { _, _, position, _ -> play(lineList[position].file) }
     }
 
-//        override fun onOptionsItemSelected(item: MenuItem): Boolean {
-//        if(drawerToggle.onOptionsItemSelected(item)){
-//            return true
-//        }
-//        return super.onOptionsItemSelected(item)
-//    }
-
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (drawerToggle.onOptionsItemSelected(item)) {
-            Log.d("RIGHT", "onOptionsItemSelected")
-            if (dwLayout.isDrawerOpen(GravityCompat.END)) {
-                Log.d("RIGHT", "if")
-                dwLayout.closeDrawer(GravityCompat.END)
-            } else {
-                Log.d("RIGHT", "else")
-                dwLayout.openDrawer(GravityCompat.END)
-            }
+        override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if(drawerToggle.onOptionsItemSelected(item)){
             return true
         }
-        return false
+        return super.onOptionsItemSelected(item)
     }
 
-    override fun onBackPressed() {
-        Log.d("RIGHT", "onBackPressed")
-        if (dwLayout.isDrawerOpen(GravityCompat.END)) {
-            Log.d("RIGHT", "if")
-            dwLayout.closeDrawer(GravityCompat.END)
-        } else {
-            super.onBackPressed()
-        }
-    }
+
+//    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+//        if (drawerToggle.onOptionsItemSelected(item)) {
+//            Log.d("RIGHT", "onOptionsItemSelected")
+//            if (dwLayout.isDrawerOpen(GravityCompat.END)) {
+//                Log.d("RIGHT", "if")
+//                dwLayout.closeDrawer(GravityCompat.END)
+//            } else {
+//                Log.d("RIGHT", "else")
+//                dwLayout.openDrawer(GravityCompat.END)
+//            }
+//            return true
+//        }
+//        return false
+//    }
+
+//    override fun onBackPressed() {
+//        Log.d("RIGHT", "onBackPressed")
+//        if (dwLayout.isDrawerOpen(GravityCompat.END)) {
+//            Log.d("RIGHT", "if")
+//            dwLayout.closeDrawer(GravityCompat.END)
+//        } else {
+//            super.onBackPressed()
+//        }
+//    }
 }
