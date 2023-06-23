@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">RaspušApp</string>
-    <string name="all">Vše</string>
+    <string name="all">Všichni</string>
     <string name="spusa">Raspuša</string>
     <string name="wong">pan Wong</string>
     <string name="norbit">Norbit</string>
@@ -9,8 +9,8 @@
 
     <string name="filter">Filtr</string>
     <string name="sort_by">Řazení</string>
-    <string name="title">Název</string>
-    <string name="time">Čas</string>
+    <string name="title">Abecední</string>
+    <string name="time">Chronologické</string>
     <string name="open">Otevřít</string>
     <string name="close">Zavřít</string>
 </resources>

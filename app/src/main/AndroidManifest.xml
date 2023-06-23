@@ -13,7 +13,7 @@
             android:name=".MainActivity"
             android:exported="true"
             android:label="RaspušApp"
-            android:theme="@style/Theme.RaspušApp.NoActionBar">
+            android:theme="@style/Theme.RaspušApp.Main">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

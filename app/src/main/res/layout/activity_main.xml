@@ -7,8 +7,7 @@
     android:layout_height="match_parent"
     android:background="?attr/colorSecondary"
     tools:context=".MainActivity"
-    android:layoutDirection="rtl"
-    >
+    android:layoutDirection="rtl">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -22,7 +21,11 @@
             android:background="?attr/colorPrimary"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toTopOf="parent"
+            app:buttonGravity="center_vertical"
+            android:paddingStart="15dp"
+            android:paddingEnd="15dp"
+            >
 
             <android.widget.SearchView
                 android:id="@+id/searchView"

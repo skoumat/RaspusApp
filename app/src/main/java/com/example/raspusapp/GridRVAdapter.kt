@@ -1,17 +1,21 @@
 package com.example.raspusapp
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.*
-import java.util.*
+import android.widget.BaseAdapter
+import android.widget.Filterable
+import android.widget.TextView
+import android.widget.Filter
+import java.util.Locale
+import android.util.Log
 
 internal class GridRVAdapter(
-    private val lineList: List<GridViewModal>
+    private val lineList: List<GridViewModal>,
+    private val mainActivity: MainActivity
 ) : BaseAdapter(), Filterable {
 
-    private var filteredData: List<GridViewModal> = lineList
+    var filteredData: List<GridViewModal> = lineList
 
     override fun getCount(): Int {
         return filteredData.size
@@ -31,6 +35,12 @@ internal class GridRVAdapter(
 
         var itemText = view.findViewById<TextView>(R.id.idTVLine)
         itemText.text = filteredData[position].line
+
+        val soundFileName = filteredData[position].file
+
+        view.setOnClickListener {
+            mainActivity.play(soundFileName)
+        }
 
         return view
     }

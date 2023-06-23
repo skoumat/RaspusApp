@@ -3,23 +3,23 @@ package com.example.raspusapp
 import com.example.raspusapp.data.MyDatabase
 import android.media.MediaPlayer
 import android.os.Bundle
-import android.util.Log
-import android.view.Gravity
-import android.view.Menu
 import android.view.MenuItem
 import android.widget.GridView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.example.raspusapp.data.DBLine
-import kotlinx.coroutines.*
 import android.widget.SearchView
 import androidx.appcompat.app.ActionBarDrawerToggle
-import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import com.example.raspusapp.databinding.ActivityMainBinding
 import com.google.android.material.navigation.NavigationView
 import androidx.appcompat.widget.Toolbar
-
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.cancel
+import kotlinx.coroutines.launch
+import java.util.Collections
+import android.util.Log
 
 class MainActivity : AppCompatActivity() {
     lateinit var lineGRV: GridView
@@ -33,7 +33,7 @@ class MainActivity : AppCompatActivity() {
     lateinit var navigationView: NavigationView
     private lateinit var toolbar: Toolbar
 
-    private lateinit var lineAdapter :GridRVAdapter
+    private lateinit var lineAdapter: GridRVAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,11 +41,8 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         toolbar = findViewById(R.id.toolbar)
-        toolbar.setNavigationIcon(R.drawable.baseline_filter_alt_24)
         setSupportActionBar(toolbar)
-        supportActionBar?.setHomeButtonEnabled(true);
-        supportActionBar?.setDisplayHomeAsUpEnabled(true);
-        supportActionBar?.setHomeAsUpIndicator(R.drawable.baseline_filter_alt_24);
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setTitle("")
 
         dwLayout = binding.drawerLayout
@@ -58,36 +55,38 @@ class MainActivity : AppCompatActivity() {
                 R.string.open,
                 R.string.close
             )
+
             dwLayout.addDrawerListener(drawerToggle)
             drawerToggle.syncState()
 
-            supportActionBar?.setDisplayHomeAsUpEnabled(true)
+            toolbar.setNavigationIcon(R.drawable.baseline_filter_alt_24)
+
             navigationView = findViewById(R.id.nav_view)
             navigationView.setNavigationItemSelectedListener { item: MenuItem ->
                 when (item.itemId) {
                     R.id.spusa -> {
-                        filterCharacter("Raspuša")
+                        filterCharacter(getString(R.string.spusa))
                     }
                     R.id.norbit -> {
-                        filterCharacter("Norbit")
+                        filterCharacter(getString(R.string.norbit))
                     }
                     R.id.wong -> {
-                        filterCharacter("pan Wong")
+                        filterCharacter(getString(R.string.wong))
                     }
                     R.id.extras -> {
-                        filterCharacter("Extras")
+                        filterCharacter(getString(R.string.extras))
                     }
                     R.id.kate -> {
-                        filterCharacter("Kate")
+                        filterCharacter(getString(R.string.kate))
                     }
                     R.id.time -> {
-                        sortDatabase("Čas")
+                        sortDatabase(getString(R.string.time))
                     }
                     R.id.title -> {
-                        sortDatabase("Název")
+                        sortDatabase(getString(R.string.title))
                     }
                     else -> {
-                        filterCharacter("All")
+                        filterCharacter(getString(R.string.all))
                     }
                 }
                 true
@@ -144,6 +143,7 @@ class MainActivity : AppCompatActivity() {
 //            sortDatabase(by)
 //        }
 
+        sortDatabase(getString(R.string.time))
     }
 
     override fun onDestroy() {
@@ -166,11 +166,11 @@ class MainActivity : AppCompatActivity() {
 
     suspend fun populateDatabase(mLineViewModel: LineViewModel) {
 
-        val wong = "pan Wong"
-        val spusa = "Raspuša"
-        val extras = "Extras"
-        val norbit = "Norbit"
-        val kate = "Kate"
+        val wong = getString(R.string.wong)
+        val spusa = getString(R.string.spusa)
+        val extras = getString(R.string.extras)
+        val norbit = getString(R.string.norbit)
+        val kate = getString(R.string.kate)
         val noone = "noone"
 
         val lineList = listOf(
@@ -187,13 +187,7 @@ class MainActivity : AppCompatActivity() {
             DBLine(0, "Kate_ahoj_norbiteee", "Ahoj, Norbite", kate, noone),
             DBLine(0, "Norbit_proc_ste_to_udelali", "Proč jste to udělali?", norbit, noone),
             DBLine(0, "Raspusa_sem_raspusa", "Jsem Raspuša", spusa, noone),
-            DBLine(
-                0,
-                "Raspusa_mas_uz_nejakou_holku",
-                "Už máš nějakou holku, Nezbite",
-                spusa,
-                noone
-            ),
+            DBLine(0, "Raspusa_mas_uz_nejakou_holku","Už máš nějakou holku, Nezbite", spusa, noone),
             DBLine(0, "BBJ&Norbit_prdel", "Krocaní prdel", extras, norbit),
             DBLine(0, "Wong_fuuuuj", "Fuuuuuj", wong, noone),
             DBLine(0, "Raspusa_otevri_ji", "Otevři jí!", spusa, noone),
@@ -212,26 +206,14 @@ class MainActivity : AppCompatActivity() {
             DBLine(0, "Raspusa_hnusss", "Hnusss", spusa, noone),
             DBLine(0, "Raspusa_dobre_jitro_Raspuso", "Dobré jitro, Raspušo", spusa, extras),
             DBLine(0, "Raspusa_pridu_pozde", "Přijdu pozdě na hodiny tance", spusa, noone),
-            DBLine(
-                0,
-                "Raspusa_proc_hejbes s moji sedackou",
-                "Proč hejbeš s mojí sedačkou?",
-                spusa,
-                noone
-            ),
+            DBLine(0, "Raspusa_proc_hejbes s moji sedackou", "Proč hejbeš s mojí sedačkou?", spusa, noone),
             DBLine(0, "Raspusa_prsa_zmacknou_klakson", "Psa zmáčknou klakson", spusa, noone),
             DBLine(0, "Wong_ja_nebyt_jako_ti_z_mesta", "Já nebýt jako ti z města", wong, noone),
             DBLine(0, "Wong_vyyyyy", "Vyyyy", wong, noone),
             DBLine(0, "Wong_ling_ling_moje_pistole", "Ling Ling! Moje pistole!", wong, noone),
             DBLine(0, "Buster_lekce_tance", "Lekce tance", extras, noone),
             DBLine(0, "Raspusa_mmmm_to_je_dobrej_napad", "Mmmm, to je dobrej nápad", spusa, noone),
-            DBLine(
-                0,
-                "Pasaci_jednou_pasak_vzdycky_pasak",
-                "Jednou pasák vždycky pasák",
-                extras,
-                noone
-            ),
+            DBLine(0, "Pasaci_jednou_pasak_vzdycky_pasak", "Jednou pasák vždycky pasák", extras, noone),
             DBLine(0, "Pasaci_bidety_baby_a_abordel", "Bidety, baby a bordel", extras, noone),
             DBLine(0, "Norbit_Ste_prima_kluci", "Jste prima, kluci", norbit, noone),
             DBLine(0, "Buster_slovo_tanec", "Tanec", extras, noone),
@@ -247,15 +229,119 @@ class MainActivity : AppCompatActivity() {
             DBLine(0, "Norbit_ty_behno", "Ty běhno!", norbit, noone),
             DBLine(0, "Raspusa_pocem_tyyyyy", "Pocem tyyyy", spusa, noone),
             DBLine(0, "Raspusha_doufam_ze_ses_zabil", "Doufám, že ses zabil!", spusa, noone),
-            DBLine(
-                0,
-                "Raspusa_takhle_to_s_tebou_dopadne_vzdycky",
-                "Takhle to s tebou dopadne vždycky",
-                spusa,
-                noone
-            ),
+            DBLine(0, "Raspusa_takhle_to_s_tebou_dopadne_vzdycky", "Takhle to s tebou dopadne vždycky", spusa, noone),
             DBLine(0, "Raspusha_zebirka", "Žebírka", spusa, noone),
-            DBLine(0, "Raspusa_fujtajbl", "Fujtajbl", spusa, noone)
+            DBLine(0, "Raspusa_fujtajbl", "Fujtajbl", spusa, noone),
+            DBLine(0, "Norbit_pohadka", "Pohádka", norbit, noone),
+            DBLine(0, "Norbit_pohadka_2", "Pohádka 2", norbit, noone),
+            DBLine(0, "Wong_to_byt_cinsky_porno", "Čínský porno", wong, noone),
+            DBLine(0, "Kate_ale_notaaak", "Ale notaaak", kate, noone),
+            DBLine(0, "Norbit_utery", "Úterý", norbit, noone),
+            DBLine(0, "Raspusa_jeste_jednou_reknes_utery", "Ještě jednou řekneš úterý...", spusa, noone),
+            DBLine(0, "Raspusa_tanecni_horecka", "Taneční horečka", spusa, noone),
+            DBLine(0, "Norbit_Mojzisiii!", "Mojžíši", norbit, noone),
+            DBLine(0, "Raspusa_zejtra_na_pikniku_chcipaci", "Zejtra na pikniku chcípáci", spusa, noone),
+            DBLine(0, "Norbit_,Raspusa_pocasi", "Počasí", norbit, noone),
+            DBLine(0, "Raspusa_hnusny_pocasi", "Hnusný počasí", spusa, noone),
+            DBLine(0, "Raspusa_posledni_dobou_furt_prsi", "Poslední dobou furt prší", spusa, noone),
+            DBLine(0, "Raspusa_nehraj_si_s_moji_sedackou!", "Nehraj si s mojí sedačkou", spusa, noone),
+            DBLine(0, "Norbit_nikdo_na_tvoji_sedacku_nesahl", "Nikdo na tvojí sedačnu nesáhl", norbit, noone),
+            DBLine(0, "Raspusa_doobre_tak_proc", "Tak proč je najednou takhle vepředu", spusa, noone),
+            DBLine(0, "Raspusa_to_mas_mozna_pravdu", "To máš možná pravdu", spusa, noone),
+            DBLine(0, "Raspusa_desny_pocasi", "Děsný počasí", spusa, noone),
+            DBLine(0, "Raspusa_podivej_na_toho_cokla_jak_cumi", "Podívej na toho čokla jak čumí", spusa, noone),
+            DBLine(0, "Raspusa_uz_te_mam_uz_te_mam", "Už tě mám, už tě mám", spusa, noone),
+            DBLine(0, "Raspusa_zmlkniii", "Zmlkniii", spusa, noone),
+            DBLine(0, "Raspusa_co_ten_zvuk_znamena", "Co ten zvuk znamená", spusa, noone),
+            DBLine(0, "Raspusa_kam_si_ty_pitomce_myslis_ze_jako_des", "Kam si ty pitomče myslíš, že jako jdeš", spusa, noone),
+            DBLine(0, "Raspusa,_Norbit_ja_te_opoustim", "Já tě opouštím", norbit, noone),
+            DBLine(0, "Raspusa_norbite_cekam_dite", "Čekám dítě", spusa, noone),
+            DBLine(0, "Raspusa_nejses_nic", "Nejseš nic", spusa, noone),
+            DBLine(0, "Raspusa_uz_zacinam_mit_brisko", "Už začínám mít bříško", spusa, noone),
+            DBLine(0, "Raspusa_prsa_me_svedej_a_tlacej", "Prsa mě svěděj a tlačej", spusa, noone),
+            DBLine(0, "Raspusa_Aaaah_Norbiteeeeee...", "Norbiteeee...", spusa, noone),
+            DBLine(0, "Norbit,_Kate_ta_v_tech_barevnech_satech", "Ta v těch barevnejch šatech", norbit, kate),
+            DBLine(0, "Raspusa_tresne_nebo_jahody", "Třešně nebo jahody?", spusa, noone),
+            DBLine(0, "Raspusa_kdo_sakra_ste", "Kdo sakra ste?", spusa, noone),
+            DBLine(0, "Raspusa_hmm_ahoj", "Hmm, ahoj", spusa, noone),
+            DBLine(0, "Raspusa_joo_spravne_to_je_pravda", "Joo, spravně, to je pravda", spusa, noone),
+            DBLine(0, "Raspusa_tak_sup_sup", "Tak šup, šup", spusa, noone),
+            DBLine(0, "Raspusha_doobree", "Doobřee", spusa, noone),
+            DBLine(0, "Raspusa_pocem!", "Pocem!", spusa, noone),
+            DBLine(0, "Raspusa_dones_mi_dalsi_vinnej_strik", "Dones mi další vinnej střik", spusa, noone),
+            DBLine(0, "Raspusa_a_proc_sakra_ne", "A proč sakra ne?", spusa, noone),
+            DBLine(0, "Raspusa&Norbit_bratricek", "Bratříček", spusa, norbit),
+            DBLine(0, "Raspusa_stat_vratte_to", "Stát, vraťte to!", spusa, noone),
+            DBLine(0, "Raspusa_vrat_mi_to_okamzite", "Vrať mi to okamžitě", spusa, noone),
+            DBLine(0, "Raspusa_myslite_ze_tam_nevlezu", "Myslíte, že tam nevlezu_", spusa, noone),
+            DBLine(0, "Raspusa_nemysli_si_ze_nezabiju_dite", "Nemysli si, že nazabiju dítě", spusa, noone),
+            DBLine(0, "Raspusa_a_ted_to_bude_bolet", "A teď to bude bolet", spusa, noone),
+            DBLine(0, "Raspusa_mali_parchanti", "Malí parchanti", spusa, noone),
+            DBLine(0, "Pasaci_moje_modlitby_byly_vyslyseny", "Moje modlitby byly vyslyšeny", extras, noone),
+            DBLine(0, "Raspusa_mam_fakt_zizen", "Mám fakt žízeň", spusa, noone),
+            DBLine(0, "Raspusa_tak_tohle_ne", "Tak tohle ne", spusa, noone),
+            DBLine(0, "Raspusa_on_se_snad_zblaznil", "On se snad zbláznil", spusa, noone),
+            DBLine(0, "Norbit_ja_jsem_tak_stastnej", "Já jsem tak šťastnej", norbit, noone),
+            DBLine(0, "Raspusa_pekne_si_ho_navnadila", "Pěkně si ho navnadila", spusa, noone),
+            DBLine(0, "Raspusa_tak_ty_ses_stastnej", "Tak ty seš šťastnej?", spusa, noone),
+            DBLine(0, "Blue_my_Latimorove", "My, Latimorové", extras, noone),
+            DBLine(0, "Kate_jedeem", "Jedeem", kate, noone),
+            DBLine(0, "Kate&Norbit_no_tak_ano", "No, tak ano", kate, norbit),
+            DBLine(0, "Rapusa_kam_to_zase_jdes", "Kam to zase jdedš?", spusa, noone),
+            DBLine(0, "Raspusa_NORBITEEE!", "NORBITEEE!", spusa, noone),
+            DBLine(0, "Raspusa_slecna_bang_bang", "Slečna bang bang", spusa, noone),
+            DBLine(0, "Raspusa_Kate_ne", "Kate, ne?", spusa, noone),
+            DBLine(0, "Norbit_Kadabushi", "Kadabuši", norbit, noone),
+            DBLine(0, "Norbit_Neeeee", "Neeeee", norbit, noone),
+            DBLine(0, "Raspusa_ja_tam_du_taky", "Já tam jdu taky", spusa, noone),
+            DBLine(0, "Raspusa_pout", "Pouť", spusa, noone),
+            DBLine(0, "Norbit_bEzVa", "bEzVa", norbit, noone),
+            DBLine(0, "Raspusa_to_tady_budeme_jen_tak_stat", "To tady budeme jen tak stát", spusa, noone),
+            DBLine(0, "Raspusa_co_je", "Co je_", spusa, noone),
+            DBLine(0, "Extras_mate_i_spodni_dil", "Máte i spodní díl", extras, noone),
+            DBLine(0, "Raspusa_no_jasne_ze_ho_mam", "No jasně, že ho mám", spusa, noone),
+            DBLine(0, "Raspusa_dik", "Dík", spusa, noone),
+            DBLine(0, "Raspusa_Co_to_sakra_je", "Co to sakra je?", spusa, noone),
+            DBLine(0, "Raspusa_co_to_sakra_je_extended", "Co to sakra je? extended", spusa, noone),
+            DBLine(0, "Raspusa_dete_tam", "Dete tam?", spusa, noone),
+            DBLine(0, "Raspusa_tady_nemaj_nic!", "Tady nemají nic!", spusa, noone),
+            DBLine(0, "Kate_ne_uz_jsem_jedla", "Ne, už jsem jedla", kate, noone),
+            DBLine(0, "Raspusa_no_toho_bych_si_nevsimla", "No, toho bych si nevšimla", spusa, noone),
+            DBLine(0, "Raspusa_oo_je_mi_vas_lito", "Oo, je mi vás líto", spusa, noone),
+            DBLine(0, "Raspusa_sem_krestanka", "Jsem křesťanka", spusa, noone),
+            DBLine(0, "Raspusa_je_to_ten_nejvetsi_samec", "Je to ten největší samec", spusa, noone),
+            DBLine(0, "Raspusa_nezlobim_se_na_nej", "Nezlobím se na něj", spusa, noone),
+            DBLine(0, "Raspusa_urcite_zacnu_s_tou_dietou", "Určitě začnu s dietou", spusa, noone),
+            DBLine(0, "Raspusa_na_co_cumis", "Na co čumíš", spusa, noone),
+            DBLine(0, "Kate_ahooooj!", "Ahoooj!", kate, noone),
+            DBLine(0, "Raspusa_zenska_co_jede_dolu", "Žesnaká, co jede dolů", spusa, noone),
+            DBLine(0, "Norbit&Kate_co_to_je", "Co to je?", norbit, kate),
+            DBLine(0, "Raspusa_uz_jedu_dolu_nany", "Už jedu dolů nány!", spusa, noone),
+            DBLine(0, "Raspusa_165", "165", spusa, noone),
+            DBLine(0, "Raspusa_to_cumis_zlato", "To čumíš, zlato", spusa, noone),
+            DBLine(0, "Narbit_omlouvam_se", "Omlouvám se", norbit, noone),
+            DBLine(0, "Raspusa_testy", "Testy", spusa, noone),
+            DBLine(0, "Raspusa_to_se_vi_zlato", "To se ví, zlato", spusa, noone),
+            DBLine(0, "Raspusa_na_radnici", "Na radnici", spusa, noone),
+            DBLine(0, "Norbit_tak_jo", "Tak jo", norbit, noone),
+            DBLine(0, "Raspusa_zvratky_tu_uklizis_ty", "Zvratky tu uklízíš ty", spusa, noone),
+            DBLine(0, "Raspusa_bez_a_uklid_to!!!", "Běž a ukliď to!", spusa, noone),
+            DBLine(0, "Raspusa_extra", "Proč chcete dnes vypadat tak extra?", spusa, noone),
+            DBLine(0, "Raspusa_kvetinka", "Květinka", spusa, noone),
+            DBLine(0, "Raspusa_reputace", "Reputace", spusa, noone),
+            DBLine(0, "Raspusa_travnik", "Trávník", spusa, noone),
+            DBLine(0, "Raspusa_helgo_uz_jdu", "Helgo už jdu", spusa, noone),
+            DBLine(0, "Raspusa_pistalka", "Norbitova píšťalka", spusa, noone),
+            DBLine(0, "Extras_tak_jdeme_na_to", "Tak jdeme na to, drahá", extras, noone),
+            DBLine(0, "Kate_kamaradi_byli", "Kamarádi byli", kate, noone),
+            DBLine(0, "Kate_no_ofsem", "No ofšem", kate, noone),
+            DBLine(0, "Kate_co", "Co?", kate, noone),
+            DBLine(0, "Raspusa_hlady_scvrkla", "Hlady scvrkla", spusa, noone),
+            DBLine(0, "Raspusa&Blue_bazina", "Bažina", spusa, extras),
+            DBLine(0, "Blue_proc_se_na_me_tak_divas", "Proč se na mě tak díváš?", extras, noone),
+            DBLine(0, "Raspusa_kde_je_Norbit", "Kde je Norbit?", spusa, noone),
+            DBLine(0, "Blue_ja_fakt_nic_nevim", "Já fakt nic nevim", extras, noone),
+            DBLine(0, "Raspusa_kvuli_tobe_sem_to_rozbila", "Kvůli tobě jsem to rozbila", spusa, noone)
         )
 
         lineList.forEach {
@@ -264,9 +350,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun filterCharacter(character: String): Boolean {
-        Log.d("FILTER", "$character")
         var shownLines: List<DBLine>
-        if (character == "All") {
+        if (character == getString(R.string.all)) {
             shownLines = database.myDao().getAllLines()
         } else {
             shownLines = database.myDao().getCharacterLines(character)
@@ -278,9 +363,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun sortDatabase(by: String): Boolean {
-        Log.d("SORT", "$by")
         var shownLines: List<DBLine>
-        if (by == "Název") {
+        if (by == getString(R.string.title)) {
+            //Collections.sort(lineAdapter.filteredData)
             shownLines = database.myDao().getAllLinesOrderedByLine()
         } else {
             shownLines = database.myDao().getAllLines()
@@ -299,14 +384,14 @@ class MainActivity : AppCompatActivity() {
             lineList = lineList + GridViewModal(it.line, it.file)
         }
 
-        lineAdapter = GridRVAdapter(lineList = lineList)
+        lineAdapter = GridRVAdapter(lineList = lineList, this)
 
         lineGRV.adapter = lineAdapter
         lineGRV.setOnItemClickListener { _, _, position, _ -> play(lineList[position].file) }
     }
 
-        override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if(drawerToggle.onOptionsItemSelected(item)){
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (drawerToggle.onOptionsItemSelected(item)) {
             return true
         }
         return super.onOptionsItemSelected(item)

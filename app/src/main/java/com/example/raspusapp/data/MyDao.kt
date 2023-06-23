@@ -1,11 +1,14 @@
 package com.example.raspusapp.data
 
-import androidx.room.*
+import androidx.room.Query
+import androidx.room.Dao
+import androidx.room.Insert
+import androidx.room.OnConflictStrategy
 
 @Dao
 interface MyDao {
     // je tam treba to order by?  ORDER BY id ASC
-    @Query("SELECT * FROM lines ORDER BY id ASC")
+    @Query("SELECT * FROM lines")
     fun getAllLines () : List<DBLine>
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
@@ -13,9 +16,6 @@ interface MyDao {
 
     @Query("DELETE FROM lines")
     suspend fun deleteAll(): Int
-
-//    @DeleteTable("$table")
-//    suspend fun deleteTable(table: String)
 
     @Query("SELECT * FROM lines ORDER BY line ASC")
     fun getAllLinesOrderedByLine () : List<DBLine>

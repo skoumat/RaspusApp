@@ -11,9 +11,7 @@
         <item name="colorOnTertiary">@color/white</item>
     </style>
 
-    <style name="Theme.RaspušApp.NoActionBar">
-        <item name="windowActionBar">false</item>
+    <style name="Theme.RaspušApp.Main">
         <item name="windowNoTitle">true</item>
     </style>
-
 </resources>
